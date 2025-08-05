@@ -6,15 +6,15 @@ import lombok.Data;
 
 @Data
 @Builder
-public class CadastroProdutoOutputDTO {
+public class ProdutoOutputDTO {
     private String id;
     private String nome;
     private String marca;
     private Integer quantidade;
     private Double preco;
 
-    public static CadastroProdutoOutputDTO entidadeParaDto(Produto produto){
-        return CadastroProdutoOutputDTO.builder()
+    public static ProdutoOutputDTO entidadeParaDto(Produto produto){
+        return ProdutoOutputDTO.builder()
                 .id(produto.getId())
                 .nome(produto.getNome())
                 .marca(produto.getMarca())
