@@ -1,6 +1,6 @@
-package br.com.leroymarcel.store.model.dto;
+package br.com.leroymarcel.store.domain.dto;
 
-import br.com.leroymarcel.store.model.entity.Produto;
+import br.com.leroymarcel.store.domain.entity.Produto;
 import lombok.Builder;
 import lombok.Data;
 

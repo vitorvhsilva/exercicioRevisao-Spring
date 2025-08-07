@@ -1,6 +1,6 @@
 package br.com.leroymarcel.store.repository;
 
-import br.com.leroymarcel.store.model.entity.Produto;
+import br.com.leroymarcel.store.domain.entity.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
