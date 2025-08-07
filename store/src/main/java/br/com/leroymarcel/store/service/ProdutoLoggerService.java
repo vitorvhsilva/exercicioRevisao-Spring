@@ -18,4 +18,8 @@ public class ProdutoLoggerService {
     public static void sucesso(String sucesso, Produto produto){
         log.info(sucesso, produto);
     }
+
+    public static void sucesso(String sucesso){
+        log.info(sucesso);
+    }
 }

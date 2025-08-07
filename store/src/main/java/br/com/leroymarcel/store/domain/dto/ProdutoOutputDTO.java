@@ -3,6 +3,9 @@ package br.com.leroymarcel.store.domain.dto;
 import br.com.leroymarcel.store.domain.entity.Produto;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -21,5 +24,9 @@ public class ProdutoOutputDTO {
                 .quantidade(produto.getQuantidade())
                 .preco(produto.getPreco())
                 .build();
+    }
+
+    public static Page<ProdutoOutputDTO> entidadeParaDto(Page<Produto> produtos){
+        return produtos.map(ProdutoOutputDTO::entidadeParaDto);
     }
 }
