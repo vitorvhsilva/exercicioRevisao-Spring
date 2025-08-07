@@ -18,7 +18,8 @@ public class ProdutoController {
 
     public ResponseEntity<ProdutoOutputDTO> criarProduto(@RequestBody @Valid CadastroProdutoInputDTO inputDTO) {
         Produto produto = CadastroProdutoInputDTO.dtoParaEntidade(inputDTO);
-        ProdutoOutputDTO outputDTO = produtoService.criarProduto(produto);
+        Produto produtoCriado = produtoService.criarProduto(produto);
+        ProdutoOutputDTO outputDTO = ProdutoOutputDTO.entidadeParaDto(produtoCriado);
         return ResponseEntity.status(HttpStatus.CREATED).body(outputDTO);
     }
 }

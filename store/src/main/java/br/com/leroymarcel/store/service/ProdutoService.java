@@ -1,11 +1,11 @@
 package br.com.leroymarcel.store.service;
 
-import br.com.leroymarcel.store.domain.dto.AtualizarProdutoInputDTO;
-import br.com.leroymarcel.store.domain.dto.CadastroProdutoInputDTO;
 import br.com.leroymarcel.store.domain.dto.ProdutoOutputDTO;
 import br.com.leroymarcel.store.domain.entity.Produto;
 import br.com.leroymarcel.store.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,27 +15,23 @@ import java.util.List;
 public class ProdutoService {
     private ProdutoRepository repository;
 
-    public ProdutoOutputDTO criarProduto(Produto produto) {
-        produto = repository.save(produto);
-        return ProdutoOutputDTO.entidadeParaDto(produto);
+    public Produto criarProduto(Produto produto) {
+        return repository.save(produto);
     }
 
-    public ProdutoOutputDTO obterProduto(String id) {
-        Produto produto = repository.findById(id)
+    public Produto obterProduto(String id) {
+        return repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado!"));
-        return ProdutoOutputDTO.entidadeParaDto(produto);
     }
 
-    public List<ProdutoOutputDTO> obterTodosOsProdutos() {
-        List<Produto> produtos = repository.findAll();
+    public Page<Produto> obterTodosOsProdutos(Pageable pageable) {
+        Page<Produto> produtos = repository.findAll(pageable);
         if (produtos.isEmpty()) throw new RuntimeException("Nenhum produto encontrado!");
 
-        return produtos.stream()
-                .map(ProdutoOutputDTO::entidadeParaDto)
-                .toList();
+        return produtos;
     }
 
-    public ProdutoOutputDTO atualizarProduto(Produto produtoAtualizado, String id) {
+    public Produto atualizarProduto(Produto produtoAtualizado, String id) {
         Produto produto = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado!"));
 
@@ -43,9 +39,7 @@ public class ProdutoService {
         produto.setQuantidade(produtoAtualizado.getQuantidade());
         produto.setPreco(produtoAtualizado.getPreco());
 
-        produto = repository.save(produto);
-
-        return ProdutoOutputDTO.entidadeParaDto(produto);
+        return repository.save(produto);
     }
 
     public void deletarProduto(String id) {
