@@ -7,6 +7,7 @@ import br.com.leroymarcel.store.domain.entity.Produto;
 import br.com.leroymarcel.store.service.ProdutoLoggerService;
 import br.com.leroymarcel.store.service.ProdutoService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("produtos")
+@RestController
+@RequestMapping("produtos")
 @AllArgsConstructor
 public class ProdutoController {
     private ProdutoService produtoService;
@@ -31,7 +33,7 @@ public class ProdutoController {
 
     @GetMapping
     public Page<ProdutoOutputDTO> obterTodosOsProdutos(
-        @RequestParam(defaultValue = "1", required = false) Integer pagina,
+        @RequestParam(defaultValue = "0", required = false) @Min(0) Integer pagina,
         @RequestParam(defaultValue = "5", required = false) Integer tamanho
     ){
         Pageable pageable = PageRequest.of(pagina, tamanho);
