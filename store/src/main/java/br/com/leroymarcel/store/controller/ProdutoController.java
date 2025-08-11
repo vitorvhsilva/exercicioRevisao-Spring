@@ -2,6 +2,7 @@ package br.com.leroymarcel.store.controller;
 
 import br.com.leroymarcel.store.domain.dto.AtualizarProdutoInputDTO;
 import br.com.leroymarcel.store.domain.dto.CadastroProdutoInputDTO;
+import br.com.leroymarcel.store.domain.dto.ProdutoModelAssembler;
 import br.com.leroymarcel.store.domain.dto.ProdutoOutputDTO;
 import br.com.leroymarcel.store.domain.entity.Produto;
 import br.com.leroymarcel.store.service.ProdutoLoggerService;
@@ -12,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +23,15 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class ProdutoController {
     private ProdutoService produtoService;
+    private ProdutoModelAssembler assembler;
 
     @PostMapping
-    public ResponseEntity<ProdutoOutputDTO> criarProduto(@RequestBody @Valid CadastroProdutoInputDTO inputDTO) {
+    public ResponseEntity<EntityModel<ProdutoOutputDTO>> criarProduto(@RequestBody @Valid CadastroProdutoInputDTO inputDTO) {
         Produto produto = CadastroProdutoInputDTO.dtoParaEntidade(inputDTO);
         Produto produtoCriado = produtoService.criarProduto(produto);
-        ProdutoOutputDTO outputDTO = ProdutoOutputDTO.entidadeParaDto(produtoCriado);
+        EntityModel<ProdutoOutputDTO> model = assembler.toModel(produtoCriado);
         ProdutoLoggerService.sucesso("Produto criado com sucesso!");
-        return ResponseEntity.status(HttpStatus.CREATED).body(outputDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(model);
     }
 
     @GetMapping
@@ -43,23 +46,23 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProdutoOutputDTO> obterProduto(@PathVariable String id) {
+    public ResponseEntity<EntityModel<ProdutoOutputDTO>> obterProduto(@PathVariable String id) {
         Produto produto = produtoService.obterProduto(id);
-        ProdutoOutputDTO outputDTO = ProdutoOutputDTO.entidadeParaDto(produto);
+        EntityModel<ProdutoOutputDTO> model = assembler.toModel(produto);
         ProdutoLoggerService.sucesso("Produtos obtido com sucesso!");
-        return ResponseEntity.status(HttpStatus.OK).body(outputDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(model);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ProdutoOutputDTO> atualizarProduto(
+    public ResponseEntity<EntityModel<ProdutoOutputDTO>> atualizarProduto(
         @PathVariable String id,
         @RequestBody AtualizarProdutoInputDTO inputDTO
     ) {
         Produto produto = AtualizarProdutoInputDTO.dtoParaEntidade(inputDTO);
         produto = produtoService.atualizarProduto(produto, id);
-        ProdutoOutputDTO outputDTO = ProdutoOutputDTO.entidadeParaDto(produto);
+        EntityModel<ProdutoOutputDTO> model = assembler.toModel(produto);
         ProdutoLoggerService.sucesso("Produtos atualizado com sucesso!");
-        return ResponseEntity.status(HttpStatus.OK).body(outputDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(model);
     }
 
     @DeleteMapping("/{id}")
