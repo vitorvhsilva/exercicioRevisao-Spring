@@ -61,7 +61,7 @@ public class ProdutoController {
         Produto produto = AtualizarProdutoInputDTO.dtoParaEntidade(inputDTO);
         produto = produtoService.atualizarProduto(produto, id);
         EntityModel<ProdutoOutputDTO> model = assembler.toModel(produto);
-        ProdutoLoggerService.sucesso("Produtos atualizado com sucesso!");
+        ProdutoLoggerService.sucesso("Produto atualizado com sucesso!");
         return ResponseEntity.status(HttpStatus.OK).body(model);
     }
 

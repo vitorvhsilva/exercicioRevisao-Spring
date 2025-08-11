@@ -46,8 +46,6 @@ public class ProdutoService {
         produto.setQuantidade(produtoAtualizado.getQuantidade());
         produto.setPreco(produtoAtualizado.getPreco());
 
-        ProdutoLoggerService.info("Produto atualizado com sucesso!");
-
         return produto;
     }
 
