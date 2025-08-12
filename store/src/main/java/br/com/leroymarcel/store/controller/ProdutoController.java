@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("produtos")
+@RequestMapping("ferramentas")
 @AllArgsConstructor
 public class ProdutoController {
     private ProdutoService produtoService;

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "TDS_TB_FERRAMENTAS")
 @AllArgsConstructor
@@ -18,10 +20,15 @@ public class Produto {
     private String id;
     @Column(name = "nome_produto", nullable = false)
     private String nome;
-    @Column(name = "marca_produto", nullable = false)
-    private String marca;
-    @Column(name = "quantidade_produto", nullable = false)
-    private Integer quantidade;
+    @Column(name = "tipo_produto", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TipoEnum tipo;
+    @Column(name = "classificacao_produto", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private ClassificacaoEnum classificacao;
+    @Column(name = "tamanho_produto", nullable = false)
+    private Double tamanho;
     @Column(name = "preco_produto", nullable = false)
-    private Double preco;
+    private BigDecimal preco;
 }
+

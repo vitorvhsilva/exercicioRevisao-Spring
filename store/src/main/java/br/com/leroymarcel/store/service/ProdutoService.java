@@ -2,13 +2,20 @@ package br.com.leroymarcel.store.service;
 
 import br.com.leroymarcel.store.controller.exception.NenhumProdutoEncontradoException;
 import br.com.leroymarcel.store.controller.exception.ProdutoNaoEncontradoPeloIdException;
+import br.com.leroymarcel.store.domain.entity.ClassificacaoEnum;
 import br.com.leroymarcel.store.domain.entity.Produto;
+import br.com.leroymarcel.store.domain.entity.TipoEnum;
 import br.com.leroymarcel.store.repository.ProdutoRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 
 @Service
 @AllArgsConstructor
@@ -43,7 +50,9 @@ public class ProdutoService {
         ProdutoLoggerService.info("Produto encontrado com sucesso!");
 
         produto.setNome(produtoAtualizado.getNome());
-        produto.setQuantidade(produtoAtualizado.getQuantidade());
+        produto.setTipo(produtoAtualizado.getTipo());
+        produto.setClassificacao(produtoAtualizado.getClassificacao());
+        produto.setTamanho(produtoAtualizado.getTamanho());
         produto.setPreco(produtoAtualizado.getPreco());
 
         return produto;
