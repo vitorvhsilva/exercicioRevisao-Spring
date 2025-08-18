@@ -31,7 +31,7 @@ WORKDIR ${APP_HOME}
 RUN chown ${APP_USER}:${APP_USER} ${APP_HOME}
 
 # Copiar o JAR gerado para o container
-COPY --from=build --chown=${APP_USER}:${APP_USER} /app/target/AlertHaven-0.0.1-SNAPSHOT.jar ${APP_HOME}/app.jar
+COPY --from=build --chown=${APP_USER}:${APP_USER} /app/target/store-0.0.1-SNAPSHOT.jar ${APP_HOME}/app.jar
 
 # Mudar para o usuário não-root
 USER ${APP_USER}
