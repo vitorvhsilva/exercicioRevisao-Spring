@@ -53,7 +53,7 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(model);
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<EntityModel<ProdutoOutputDTO>> atualizarProduto(
         @PathVariable String id,
         @RequestBody AtualizarProdutoInputDTO inputDTO

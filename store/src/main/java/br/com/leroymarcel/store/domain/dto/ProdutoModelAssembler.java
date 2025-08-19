@@ -19,7 +19,7 @@ public class ProdutoModelAssembler implements RepresentationModelAssembler<Produ
         return EntityModel.of(dto,
                 linkTo(methodOn(ProdutoController.class).obterProduto(produto.getId())).withSelfRel().withType("GET"),
                 linkTo(methodOn(ProdutoController.class).excluirProduto(produto.getId())).withRel("excluir").withType("DELETE"),
-                linkTo(methodOn(ProdutoController.class).atualizarProduto(produto.getId(), null)).withRel("atualizar").withType("PATCH")
+                linkTo(methodOn(ProdutoController.class).atualizarProduto(produto.getId(), null)).withRel("atualizar").withType("PUT")
         );
     }
 }
